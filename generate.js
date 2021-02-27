@@ -108,4 +108,11 @@ for (i2 = 0; i2 < numberOfDirectories; i2++) {
         resetUsedTicks();
     }
 }
-
+console.log("");
+console.log("MIDI Pattern File Generation Complete");
+console.log("");
+console.log(`Channels: ${numberOfDirectories}`);
+console.log(`Patterns: ${numberOfPatternFiles}`);
+console.log(`Scale: ${scale.charAt(0).toUpperCase() + scale.slice(1)}`)
+console.log(`Octave: ${octave}`);
+console.log("");
