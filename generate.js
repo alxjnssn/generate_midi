@@ -1,6 +1,7 @@
 var fs = require('fs');
 var Midi = require('jsmidgen');
 var mkdirp = require('mkdirp');
+const { Timer } = require('timer-node');
 
 const resetDelay = () => {
     delay = 0;
@@ -65,6 +66,37 @@ const generateMidiPatternFile = (patternNumber, channel, scale) => {
     )
 }
 
+const init = () => {
+    timer.start();
+    for (i2 = 0; i2 < numberOfDirectories; i2++) {
+        if (!fs.existsSync(`./midi_channel_patterns`)) {
+            mkdirp(`./midi_channel_patterns`)
+        }
+    
+        mkdirp(`./midi_channel_patterns/midi_channel_00${i2}`);
+        
+        for (i1 = 0; i1 < numberOfPatternFiles; i1++) {
+            generateMidiPatternFile(i1, i2, scale);
+            resetDelay();
+            resetUsedTicks();
+        }
+    }
+    timer.stop();
+
+    console.log("");
+    console.log("MIDI Pattern File Generation Complete");
+    console.log("");
+    console.log(`Channels: ${numberOfDirectories}`);
+    console.log(`Patterns: ${numberOfPatternFiles}`);
+    console.log(`Scale: ${scale.charAt(0).toUpperCase() + scale.slice(1)}`)
+    console.log(`Octave: ${octave}`);
+    console.log("");
+    console.log(`${timer.format()}`);
+    console.log("");
+}
+
+const timer = new Timer('Task Completed in');
+
 const scales = {
     hirajoshi: ['d', 'e', 'f', 'a', 'a#'],
     lydian: ['c', 'd', 'e', 'f#', 'g#', 'a', 'b', 'c']   
@@ -95,24 +127,4 @@ process.argv.forEach(function (val, index, array) {
     }
 });
 
-for (i2 = 0; i2 < numberOfDirectories; i2++) {
-    if (!fs.existsSync(`./midi_channel_patterns`)) {
-        mkdirp(`./midi_channel_patterns`)
-    }
-
-    mkdirp(`./midi_channel_patterns/midi_channel_00${i2}`);
-    
-    for (i1 = 0; i1 < numberOfPatternFiles; i1++) {
-        generateMidiPatternFile(i1, i2, scale);
-        resetDelay();
-        resetUsedTicks();
-    }
-}
-console.log("");
-console.log("MIDI Pattern File Generation Complete");
-console.log("");
-console.log(`Channels: ${numberOfDirectories}`);
-console.log(`Patterns: ${numberOfPatternFiles}`);
-console.log(`Scale: ${scale.charAt(0).toUpperCase() + scale.slice(1)}`)
-console.log(`Octave: ${octave}`);
-console.log("");
+init();
