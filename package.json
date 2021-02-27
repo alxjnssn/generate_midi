@@ -19,6 +19,7 @@
   "dependencies": {
     "fs": "0.0.1-security",
     "jsmidgen": "^0.1.5",
-    "mkdirp": "^1.0.4"
+    "mkdirp": "^1.0.4",
+    "timer-node": "^4.0.0"
   }
 }
