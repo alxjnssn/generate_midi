@@ -62,7 +62,7 @@ const generateMidiPatternFile = (patternNumber, channel, scale) => {
         () => {
             fs.writeFileSync(`./midi_channel_patterns/midi_channel_00${channel}/${scale}_midi_pattern_00${patternNumber}.mid`, file.toBytes(), 'binary')
         },
-        1
+        buffer
     )
 }
 
@@ -91,11 +91,13 @@ const init = () => {
     console.log(`Scale: ${scale.charAt(0).toUpperCase() + scale.slice(1)}`)
     console.log(`Octave: ${octave}`);
     console.log("");
-    console.log(`${timer.format()}`);
+    console.log(`${timer.format()} - with a ${buffer}ms buffer`);
     console.log("");
 }
 
-const timer = new Timer('Task Completed in');
+const buffer = 1;
+
+const timer = new Timer('Task Duration');
 
 const scales = {
     hirajoshi: ['d', 'e', 'f', 'a', 'a#'],
@@ -124,6 +126,10 @@ process.argv.forEach(function (val, index, array) {
 
     if (index === 5) {
         numberOfDirectories = parseInt(val);
+    }
+
+    if (index === 6) {
+        buffer = parseInt(val);
     }
 });
 
