@@ -83,12 +83,15 @@ process.argv.forEach(function (val, index, array) {
     }
 
     if (index === 3) {
-        numberOfPatternFiles = parseInt(val);
+        octave = parseInt(val);
     }
 
     if (index === 4) {
-        numberOfDirectories = parseInt(val);
+        numberOfPatternFiles = parseInt(val);
+    }
 
+    if (index === 5) {
+        numberOfDirectories = parseInt(val);
     }
 });
 
