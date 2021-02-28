@@ -1,6 +1,6 @@
-var fs = require('fs');
-var Midi = require('jsmidgen');
-var mkdirp = require('mkdirp');
+const fs = require('fs');
+const Midi = require('jsmidgen');
+const mkdirp = require('mkdirp');
 const { Timer } = require('timer-node');
 
 const resetDelay = () => {
@@ -33,11 +33,11 @@ const resetUsedTicks = () => {
 }
 
 const generateMidiPatternFile = (patternNumber, channel, scale) => {
-    var trackMessage = [`Channel: 00${channel} New Track: Track00${patternNumber} `];
-    var file = new Midi.File();
-    var track = new Midi.Track();
-    var steps = 8;
-    var totalTicks = steps * 64
+    const trackMessage = [`Channel: 00${channel} New Track: Track00${patternNumber} `];
+    const file = new Midi.File();
+    const track = new Midi.Track();
+    const steps = 8;
+    const totalTicks = steps * 64
 
     file.addTrack(track);
 
@@ -58,12 +58,7 @@ const generateMidiPatternFile = (patternNumber, channel, scale) => {
     }
     console.log(trackMessage.join(''));
 
-    setTimeout(
-        () => {
-            fs.writeFileSync(`./midi_channel_patterns/midi_channel_00${channel}/${scale}_midi_pattern_00${patternNumber}.mid`, file.toBytes(), 'binary')
-        },
-        buffer
-    )
+    fs.writeFileSync(`./midi_channel_patterns/midi_channel_00${channel}/${scale}_midi_pattern_00${patternNumber}.mid`, file.toBytes(), 'binary')
 }
 
 const init = () => {
@@ -95,7 +90,7 @@ const init = () => {
     console.log("");
 }
 
-const buffer = 1;
+let buffer = 1;
 
 const timer = new Timer('Task Duration');
 
